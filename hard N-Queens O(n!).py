@@ -4,20 +4,22 @@ def solveNQueens(self, n: int) -> List[List[str]]:
     def dfs(i, board):
         if i == n:
             boards.append([''.join(line) for line in board])
-        else:
-            for j in range(n):
-                if j not in col and i + j not in plus and i - j not in minus:
-                    col.add(j)
-                    plus.add(i + j)
-                    minus.add(i - j)
-                    board[i][j] = 'Q'
+            return
+        
+        for j in range(n):
+            if j in col or i + j in plus or i - j in minus:
+                continue
+            col.add(j)
+            plus.add(i + j)
+            minus.add(i - j)
+            board[i][j] = 'Q'
 
-                    dfs(i + 1, board)
+            dfs(i + 1, board)
 
-                    col.remove(j)
-                    plus.remove(i + j)
-                    minus.remove(i - j)
-                    board[i][j] = '.'
+            col.remove(j)
+            plus.remove(i + j)
+            minus.remove(i - j)
+            board[i][j] = '.'
 
     dfs(0, [['.'] * n for _ in range(n)])
 
